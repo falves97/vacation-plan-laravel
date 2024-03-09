@@ -1,0 +1,10 @@
+version: '3.9'
+
+services:
+  webserver:
+    volumes:
+      - ./:/app
+
+  database:
+    ports:
+      - ${DATABASE_PORT:-5432}:5432
