@@ -1,6 +1,7 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\AuthenticateController;
+use App\Http\Middleware\EnforceJson;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +15,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::post('/register', [AuthenticateController::class, 'register'])
+    ->name('authenticate.register');
+
+Route::post('/login', [AuthenticateController::class, 'login'])
+    ->name('authenticate.login');
+
+Route::middleware('auth:api')->group(function () {
+    Route::get('/user/tokens', [AuthenticateController::class, 'userTokens'])
+        ->name('user.tokens');
 });
