@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthenticateController;
-use App\Http\Middleware\EnforceJson;
+use App\Http\Controllers\HolidayPlanController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,6 +22,5 @@ Route::post('/login', [AuthenticateController::class, 'login'])
     ->name('authenticate.login');
 
 Route::middleware('auth:api')->group(function () {
-    Route::get('/user/tokens', [AuthenticateController::class, 'userTokens'])
-        ->name('user.tokens');
+    Route::apiResource('holiday-plans', HolidayPlanController::class);
 });
