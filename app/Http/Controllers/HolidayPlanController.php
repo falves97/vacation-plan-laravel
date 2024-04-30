@@ -6,28 +6,44 @@ use App\Http\Resources\HolidayPlanResource;
 use App\Models\HolidayPlan;
 use App\Models\User;
 use App\Repositories\HolidayPlanRepository;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpFoundation\Response;
 
 class HolidayPlanController extends Controller
 {
-    public function __construct(private HolidayPlanRepository $holidayPlanRepository)
+    public function __construct(private readonly HolidayPlanRepository $holidayPlanRepository)
     {
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(HolidayPlan $holidayPlan)
+    public function destroy(int $id): JsonResponse
     {
-        //
+        try {
+            $holidayPlan = $this->holidayPlanRepository->findById($id);
+            $this->authorize('delete', $holidayPlan);
+        } catch (AuthorizationException $e) {
+            return response()->json(['message' => $e->getMessage()], Response::HTTP_UNAUTHORIZED);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['message' => $e->getMessage()], Response::HTTP_NOT_FOUND);
+        }
+
+        $holidayPlan->delete();
+
+        return response()->json(status: Response::HTTP_OK);
     }
 
     /**
      * Display a listing of the resource.
      *
      */
-    public function index(Request $request)
+    public function index(Request $request): AnonymousResourceCollection
     {
         /** @var User $user */
         $user = Auth::user();
@@ -40,9 +56,16 @@ class HolidayPlanController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(HolidayPlan $holidayPlan)
+    public function show(int $id): HolidayPlanResource|JsonResponse
     {
-        $this->authorize('view', $holidayPlan);
+        try {
+            $holidayPlan = $this->holidayPlanRepository->findById($id);
+            $this->authorize('view', $holidayPlan);
+        } catch (AuthorizationException $e) {
+            return response()->json(['message' => $e->getMessage()], Response::HTTP_UNAUTHORIZED);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['message' => $e->getMessage()], Response::HTTP_NOT_FOUND);
+        }
 
         return new HolidayPlanResource($holidayPlan);
     }
