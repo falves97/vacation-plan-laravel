@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use DateTime;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -16,7 +17,7 @@ use Laravel\Passport\HasApiTokens;
  * @property string $email
  * @property string $password
  * @property string $remember_token
- * @property DateTime $email_verified_at
+ * @property Carbon $email_verified_at
  * @property Collection<HolidayPlan> $holidayPlans
  */
 class User extends Authenticatable
