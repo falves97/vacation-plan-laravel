@@ -2,7 +2,7 @@ services:
   webserver:
     build:
       context: ./
-    restart: unless-stopped
+    restart: always
     volumes:
       - caddy_data:/data
       - caddy_config:/config
