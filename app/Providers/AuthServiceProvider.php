@@ -3,7 +3,8 @@
 namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
-use App\Models\Client;
+use App\Models\HolidayPlan;
+use App\Policies\HolidayPlanPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Laravel\Passport\Passport;
 
@@ -15,7 +16,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        //
+        HolidayPlan::class => HolidayPlanPolicy::class,
     ];
 
     /**

@@ -26,7 +26,6 @@ class HolidayPlanController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @todo Corrigir relacionamento de participants e holidays no banco
      */
     public function index(Request $request)
     {
@@ -43,6 +42,8 @@ class HolidayPlanController extends Controller
      */
     public function show(HolidayPlan $holidayPlan)
     {
+        $this->authorize('view', $holidayPlan);
+
         return new HolidayPlanResource($holidayPlan);
     }
 

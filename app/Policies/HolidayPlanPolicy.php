@@ -12,8 +12,7 @@ class HolidayPlanPolicy
      */
     public function delete(User $user, HolidayPlan $holidayPlan): bool
     {
-        return true;
-//        return $user->holidayPlans->contains($holidayPlan);
+        return $holidayPlan->owner->id === $user->id;
     }
 
     /**
@@ -21,8 +20,7 @@ class HolidayPlanPolicy
      */
     public function update(User $user, HolidayPlan $holidayPlan): bool
     {
-        return true;
-//        return $user->holidayPlans->contains($holidayPlan);
+        return $holidayPlan->owner->id === $user->id;
     }
 
     /**
@@ -30,7 +28,6 @@ class HolidayPlanPolicy
      */
     public function view(User $user, HolidayPlan $holidayPlan): bool
     {
-        return true;
-//        return $holidayPlan->owner->id === $user->id || $holidayPlan->participants->contains($user);
+        return $holidayPlan->owner->id === $user->id || $holidayPlan->participants->contains($user);
     }
 }
