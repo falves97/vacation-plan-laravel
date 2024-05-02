@@ -7,6 +7,8 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class HolidayPlanResource extends JsonResource
 {
+    public static $wrap = 'holiday_plan';
+
     /**
      * Transform the resource into an array.
      *
@@ -18,6 +20,7 @@ class HolidayPlanResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'description' => $this->description,
+            'date' => $this->date->format('d/m/Y'),
             'location' => $this->location,
             'owner' => new UserResource($this->owner),
             'participants' => UserResource::collection($this->participants),
