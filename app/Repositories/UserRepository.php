@@ -16,7 +16,7 @@ class UserRepository
     public function findByEmail($email): User
     {
         /** @var User $user */
-        $user =  User::query()->where('email', $email)->first();
+        $user =  User::query()->where('email', $email)->firstOrFail();
         return $user;
     }
 }
