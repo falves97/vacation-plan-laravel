@@ -25,6 +25,7 @@ class HolidayPlan extends Model
         'title',
         'description',
         'location',
+        'date',
         'owner_id',
     ];
 
