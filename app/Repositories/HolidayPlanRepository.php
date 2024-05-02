@@ -4,11 +4,17 @@ namespace App\Repositories;
 
 use App\Models\HolidayPlan;
 use App\Models\User;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class HolidayPlanRepository
 {
-    public function listByUser(User $user, int $perPage = 10)
+    /**
+     * @param User $user
+     * @param int $perPage
+     * @return LengthAwarePaginator
+     */
+    public function listByUser(User $user, int $perPage = 10): LengthAwarePaginator
     {
         $perPage = $perPage <= 0 ? 10 : $perPage;
 
