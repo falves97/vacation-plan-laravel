@@ -31,6 +31,8 @@ class HolidayPlanRepository
      */
     public function findById(int $id): HolidayPlan
     {
-        return HolidayPlan::query()->findOrFail($id)->first();
+        /** @var HolidayPlan $holidayPlan */
+        $holidayPlan = HolidayPlan::query()->findOrFail($id);
+        return $holidayPlan;
     }
 }
