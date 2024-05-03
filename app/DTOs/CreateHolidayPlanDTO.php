@@ -6,7 +6,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 
-final class HolidayPlanDTO
+final class CreateHolidayPlanDTO
 {
     /**
      * @param string $title
