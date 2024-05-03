@@ -1,9 +1,19 @@
-version: '3.9'
-
 services:
   webserver:
+    build:
+      context: .
+      target: frankenphp_dev
     volumes:
       - ./:/app
+      - ./frankenphp/conf.d/app.dev.ini:/usr/local/etc/php/conf.d/app.dev.ini:ro
+    environment:
+      # See https://xdebug.org/docs/all_settings#mode
+      XDEBUG_MODE: "${XDEBUG_MODE:-off}"
+      PHP_IDE_CONFIG: 'serverName=localhost'
+    extra_hosts:
+      # Ensure that host.docker.internal is correctly defined on Linux
+      - host.docker.internal:host-gateway
+    tty: true
 
   database:
     ports:

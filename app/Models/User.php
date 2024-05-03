@@ -2,15 +2,29 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Carbon\Carbon;
+use DateTime;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Collection;
+use Laravel\Passport\HasApiTokens;
 
+/**
+ * @property integer $id
+ * @property string $name
+ * @property string $email
+ * @property string $password
+ * @property string $remember_token
+ * @property Carbon $email_verified_at
+ * @property Collection<HolidayPlan> $holidayPlans
+ */
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens;
+    use HasFactory;
+    use Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -42,4 +56,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function holidayPlans(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            HolidayPlan::class,
+            'holiday_plans_participants',
+            'participant_id',
+            'holiday_plan_id'
+        );
+    }
 }
