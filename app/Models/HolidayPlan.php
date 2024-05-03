@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -13,6 +14,7 @@ use Illuminate\Support\Collection;
  * @property string $title
  * @property string $description
  * @property string $location
+ * @property Carbon $date
  * @property integer $owner_id
  * @property User $owner
  * @property Collection<User> $participants
