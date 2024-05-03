@@ -2,10 +2,12 @@
 
 namespace App\Services;
 
-use App\DTOs\HolidayPlanDTO;
+use App\DTOs\CreateHolidayPlanDTO;
+use App\DTOs\UpdateHolidayPlanDTO;
 use App\Models\HolidayPlan;
 use App\Repositories\UserRepository;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 
 class HolidayPlanService
@@ -14,7 +16,7 @@ class HolidayPlanService
     {
     }
 
-    public static function createHolidayPlan(HolidayPlanDTO $holidayPlanDto): HolidayPlan
+    public static function createHolidayPlan(CreateHolidayPlanDTO $holidayPlanDto): HolidayPlan
     {
         /** @var HolidayPlan $holidayPlan */
         $holidayPlan =  HolidayPlan::query()->create([
@@ -24,6 +26,8 @@ class HolidayPlanService
             'location' => $holidayPlanDto->location,
             'owner_id' => $holidayPlanDto->owner->id,
         ]);
+
+        self::syncHolidayPlanWithParticipants($holidayPlan, $holidayPlanDto->participants);
 
         return $holidayPlan;
     }
@@ -42,6 +46,20 @@ class HolidayPlanService
             ->pluck('id');
 
         $holidayPlan->participants()->sync($participantsId);
+
+        return $holidayPlan;
+    }
+
+    public static function updateHolidayPlan(UpdateHolidayPlanDTO $holidayPlanDto, HolidayPlan $holidayPlan): HolidayPlan
+    {
+        $holidayPlanData = (array) $holidayPlanDto;
+        $holidayPlanData = array_filter($holidayPlanData);
+
+        $holidayPlan->update(Arr::except($holidayPlanData, ['participants']));
+
+        if ($holidayPlanDto->participants) {
+            self::syncHolidayPlanWithParticipants($holidayPlan, $holidayPlanDto->participants);
+        }
 
         return $holidayPlan;
     }
