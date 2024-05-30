@@ -1,7 +1,7 @@
 services:
   webserver:
     build:
-      context: ./
+      context: ./frankenphp
     restart: always
     volumes:
       - caddy_data:/data
