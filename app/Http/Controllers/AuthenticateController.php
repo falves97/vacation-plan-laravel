@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterUserRequest;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
@@ -11,17 +12,14 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AuthenticateController extends Controller
 {
-    public function register(RegisterUserRequest $request): JsonResponse
+    public function register(RegisterUserRequest $request): UserResource
     {
         $validated = $request->validated();
 
         /** @var User $user */
         $user = User::create($validated);
 
-        return response()->json([
-            'message' => 'User registered',
-            'user' => $user,
-        ], Response::HTTP_CREATED);
+        return new UserResource($user);
     }
 
     public function login(LoginRequest $request)

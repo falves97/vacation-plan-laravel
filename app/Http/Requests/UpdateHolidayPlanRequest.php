@@ -27,7 +27,7 @@ class UpdateHolidayPlanRequest extends FormRequest
             'location' => 'string|nullable|max:255',
             'date' => 'dateformat:d/m/Y|nullable',
             'participants' => 'array|nullable',
-            'participants.*' => 'email|required|max:255|exists:users,email',
+            'participants.*' => 'integer|required|exists:users,id',
         ];
     }
 }
