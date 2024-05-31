@@ -5,6 +5,7 @@ namespace App\Services;
 use App\DTOs\CreateHolidayPlanDTO;
 use App\DTOs\UpdateHolidayPlanDTO;
 use App\Models\HolidayPlan;
+use App\Models\User;
 use App\Repositories\UserRepository;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Arr;
@@ -65,8 +66,8 @@ class HolidayPlanService
     }
 
     /**
-     * @param Collection $emails
-     * @return Collection
+     * @param Collection<string> $emails
+     * @return Collection<User>
      * @throws ModelNotFoundException
      */
     public function makeParticipantsCollectionByEmail(Collection $emails): Collection
@@ -74,6 +75,22 @@ class HolidayPlanService
         $participantsCollection = collect();
         foreach ($emails as $email) {
             $participant = $this->userRepository->findByEmail($email);
+            $participantsCollection->push($participant);
+        }
+
+        return $participantsCollection;
+    }
+
+    /**
+     * @param Collection<integer> $ids
+     * @return Collection<User>
+     * @throws ModelNotFoundException
+     */
+    public function makeParticipantsCollectionById(Collection $ids): Collection
+    {
+        $participantsCollection = collect();
+        foreach ($ids as $id) {
+            $participant = $this->userRepository->findById($id);
             $participantsCollection->push($participant);
         }
 
