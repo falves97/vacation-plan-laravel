@@ -53,3 +53,10 @@ Após isso, copie o id e chave gerada para o Personal Client, cole-as no .env, n
 PASSPORT_PERSONAL_ACCESS_CLIENT_ID=""
 PASSPORT_PERSONAL_ACCESS_CLIENT_SECRET=""
 ```
+
+### Vite
+
+Ao usar certificados não confiáveis, será necessário aceitar o aviso de certificado do servidor de desenvolvimento do Vite no navegador, 
+seguindo o link “Local” no console ao executar o comando npm run dev.
+
+Saiba mais em [Node README.md](node/README.md).

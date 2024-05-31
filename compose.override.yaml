@@ -1,7 +1,7 @@
 services:
   webserver:
     build:
-      context: .
+      context: ./frankenphp
       target: frankenphp_dev
     volumes:
       - ./:/app
@@ -18,3 +18,11 @@ services:
   database:
     ports:
       - ${DATABASE_PORT:-5432}:5432
+
+  node:
+    build:
+      context: ./node
+    volumes:
+      - ./:/app
+    ports:
+      - 5173:5173

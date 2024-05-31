@@ -136,6 +136,6 @@ class HolidayPlanController extends Controller
 
         $holidayPlan->delete();
 
-        return response()->json(status: Response::HTTP_OK);
+        return response()->json(status: Response::HTTP_NO_CONTENT);
     }
 }
