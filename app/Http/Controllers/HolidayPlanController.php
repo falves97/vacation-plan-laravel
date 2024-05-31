@@ -67,7 +67,7 @@ class HolidayPlanController extends Controller
 
         $participants = collect();
         if (!empty($holidayPlanData['participants'])) {
-            $participants = $this->holidayPlanService->makeParticipantsCollectionByEmail(collect($holidayPlanData['participants']));
+            $participants = $this->holidayPlanService->makeParticipantsCollectionById(collect($holidayPlanData['participants']));
         }
 
         /** @var User $owner */
@@ -104,7 +104,7 @@ class HolidayPlanController extends Controller
 
         $participants = null;
         if (!empty($holidayPlanData['participants'])) {
-            $participants = $this->holidayPlanService->makeParticipantsCollectionByEmail(collect($holidayPlanData['participants']));
+            $participants = $this->holidayPlanService->makeParticipantsCollectionById(collect($holidayPlanData['participants']));
         }
 
         $holidayPlanDto = new UpdateHolidayPlanDTO(
