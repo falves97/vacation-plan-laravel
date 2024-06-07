@@ -42,7 +42,7 @@
       "post": {
         "description": "Rota para registro de usuário",
         "tags": [
-          "Autenticação"
+          "Authentication"
         ],
         "operationId": "registerUser",
         "requestBody": {
@@ -95,7 +95,7 @@
       "post": {
         "description": "Rota para login de usuário",
         "tags": [
-          "Autenticação"
+          "Authentication"
         ],
         "operationId": "loginUser",
         "requestBody": {
@@ -282,7 +282,7 @@
         "tags": [
           "Vacation Plan"
         ],
-        "operationId": "putHolidayPlan",
+        "operationId": "patHolidayPlan",
         "security": [
           {
             "auth": []
@@ -427,8 +427,7 @@
       "auth": {
         "type": "http",
         "scheme": "bearer",
-        "bearerFormat": "JWT",
-        "in": "header"
+        "bearerFormat": "JWT"
       }
     }
   }
